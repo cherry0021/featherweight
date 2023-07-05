@@ -27,7 +27,7 @@ class UserResponse(BaseModel):
     user_id: str
     email: Optional[str]
     name: Optional[str]
-    card: Optional[str]
+    card: str
 
 @app.get("/")
 def root():
