@@ -24,7 +24,7 @@ logging.basicConfig(level=settings.LOG_LEVEL.upper())
 
 
 class UserResponse(BaseModel):
-    user_id: str
+    user_id: Optional[str]
     email: Optional[str]
     name: Optional[str]
     card: str
