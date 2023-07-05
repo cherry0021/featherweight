@@ -14,6 +14,7 @@ from fastapi_cache.decorator import cache
 from fastapi_limiter import FastAPILimiter
 from fastapi_limiter.depends import RateLimiter
 from pydantic import BaseModel
+from typing import Dict
 
 from config import settings
 
@@ -37,9 +38,10 @@ def root():
 
 
 @app.post("/task/", response_model=UserResponse)
-def current_user():
+def current_user(card: str):
     # this endpoint's repsonse will match the UserResponse model
-    postdata = {"card": UserResponse.card}
+    postdata: Dict[str, str] = {"card": card}
+
     headersList = {
  "Accept": "*/*",
  "Content-Type": "application/json" 
