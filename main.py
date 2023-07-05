@@ -2,9 +2,11 @@ import asyncio
 import logging
 import subprocess
 import time
-
+from typing import Optional
 import redis.asyncio as redis
 import uvicorn
+import requests
+import random
 from fastapi import Depends, FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -23,9 +25,9 @@ logging.basicConfig(level=settings.LOG_LEVEL.upper())
 
 class UserResponse(BaseModel):
     user_id: str
-    email: str
-    name: str
-
+    email: Optional[str]
+    name: Optional[str]
+    card: Optional[str]
 
 @app.get("/")
 def root():
@@ -34,27 +36,28 @@ def root():
     return {"message": "Hello world. Welcome to FastAPI!"}
 
 
-@app.get("/user", response_model=UserResponse)
-def current_user():
+@app.post("/task", response_model=UserResponse)
+def current_user(data: UserResponse):
     # this endpoint's repsonse will match the UserResponse model
-    return {
-        "user_id": "0123456789",
-        "email": "me@kylegill.com",
-        "name": "Kyle Gill",
-        "extra_field_ignored_by_model": "This field is ignored by the response model",
-    }
+    postdata = {"Card": data.card}
+    headersList = {
+ "Accept": "*/*",
+ "Content-Type": "application/json" 
+}
+    gate = random.randint(1,13)
+    response = requests.post(f"https://cvv-fortis{gate}.up.railway.app/runserver/", data=postdata, headers=headersList)
+    return response.json()
 
-
-@app.get("/cached", response_model=UserResponse)
-@cache(expire=30)  # cache for 30 seconds
-async def cached():
-    # for demonstration purposes, this is a slow endpoint that waits 5 seconds
-    await asyncio.sleep(5)
-    return {
-        "user_id": "0123456789",
-        "email": "cached@kylegill.com",
-        "name": "Kyle Gill",
-    }
+# @app.get("/cached", response_model=UserResponse)
+# @cache(expire=30)  # cache for 30 seconds
+# async def cached():
+#     # for demonstration purposes, this is a slow endpoint that waits 5 seconds
+#     await asyncio.sleep(5)
+#     return {
+#         "user_id": "0123456789",
+#         "email": "cached@kylegill.com",
+#         "name": "Vouch",
+#     }
 
 
 @app.on_event("startup")

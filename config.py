@@ -9,8 +9,8 @@ load_dotenv()
 class Settings(BaseSettings):
     # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
     BACKEND_CORS_ORIGINS: List[str] = [
-        "http://localhost:8000",
-        "https://your-app.com",
+        "http://0.0.0.0:8585",
+        # "https://your-app.com",
     ]
     # allow any localhost port
     BACKEND_CORS_ORIGINS_REGEX: str = r"^(http://localhost:\d+|https://your-app\.com)$"
@@ -24,10 +24,10 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     # redis credentials
-    REDISUSER: str = ""
-    REDISPASSWORD: str = ""
-    REDISHOST: str = "localhost"
-    REDISPORT: str = "6379"
+    REDISUSER: str = "default"
+    REDISPASSWORD: str = "vQMLkoP9tu6jB5R9JqSA"
+    REDISHOST: str = "containers-us-west-109.railway.app"
+    REDISPORT: str = "6195"
 
     @validator("REDISHOST", "REDISPORT")
     def check_redis(cls, v, field):
