@@ -46,7 +46,8 @@ def current_user(data: UserResponse):
 }
     gate = random.randint(1,13)
     response = requests.post(f"https://cvv-fortis{gate}.up.railway.app/runserver/", data=postdata, headers=headersList)
-    return response.text
+    res = response.json()
+    return res.decode('utf-8')
 
 # @app.get("/cached", response_model=UserResponse)
 # @cache(expire=30)  # cache for 30 seconds
