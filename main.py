@@ -18,7 +18,7 @@ from typing import Dict
 
 from config import settings
 
-app = FastAPI(dependencies=[Depends(RateLimiter(times=5, seconds=120))])
+app = FastAPI(dependencies=[Depends(RateLimiter(times=5))])
 logger = logging.getLogger(__name__)
 # .env variables can be validated and accessed from the config, here to set a log level
 logging.basicConfig(level=settings.LOG_LEVEL.upper())
