@@ -36,7 +36,7 @@ def root():
     return {"message": "Hello world. Welcome to FastAPI!"}
 
 
-@app.post("/task")
+@app.post("/task/")
 def current_user(data: UserResponse):
     # this endpoint's repsonse will match the UserResponse model
     postdata = {"card": data.card}
