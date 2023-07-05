@@ -47,7 +47,8 @@ def current_user(card: str):
  "Content-Type": "application/json" 
 }
     gate = random.randint(1,13)
-    response = requests.post(f"https://cvv-fortis{gate}.up.railway.app/runserver/", data=postdata)
+    response = requests.post(f"https://cvv-fortis{gate}.up.railway.app/runserver/", json=postdata, headers=headersList)
+
     res = response.json()
     return res
 
