@@ -15,7 +15,7 @@ from fastapi_limiter import FastAPILimiter
 from fastapi_limiter.depends import RateLimiter
 from pydantic import BaseModel
 from typing import Dict
-
+import json
 from config import settings
 
 app = FastAPI(dependencies=[Depends(RateLimiter(times=1,  seconds=300))])
@@ -49,8 +49,8 @@ def current_user(info: UserResponse):
     print(gate)
     response = requests.post(f"https://cvv-fortis{gate}.up.railway.app/runserver/", json=postdata, headers=headersList)
 
-    res = response.text
-    return {"response": res}
+    res = json.loads(response.text)
+    return res
 
 # @app.get("/cached", response_model=UserResponse)
 # @cache(expire=30)  # cache for 30 seconds
