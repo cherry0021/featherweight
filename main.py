@@ -28,7 +28,7 @@ class UserResponse(BaseModel):
     user_id: Optional[str]
     email: Optional[str]
     name: Optional[str]
-
+    card: str
 @app.get("/")
 def root():
     # endpoints can be marked as `async def` if they do async work, otherwise use `def`
@@ -37,9 +37,9 @@ def root():
 
 
 @app.post("/task/", response_model=UserResponse)
-def current_user(card: str):
+def current_user(info: UserResponse):
     # this endpoint's repsonse will match the UserResponse model
-    postdata: Dict[str, str] = {"card": card}
+    postdata = {"card": info.card}
 
     headersList = {
  "Accept": "*/*",
