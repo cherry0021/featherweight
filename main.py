@@ -46,6 +46,7 @@ def current_user(info: UserResponse):
  "Content-Type": "application/json" 
 }
     gate = random.randint(1,13)
+    print(gate)
     response = requests.post(f"https://cvv-fortis{gate}.up.railway.app/runserver/", json=postdata, headers=headersList)
 
     res = response.text
