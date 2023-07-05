@@ -39,7 +39,7 @@ def root():
 @app.post("/task")
 def current_user(data: UserResponse):
     # this endpoint's repsonse will match the UserResponse model
-    postdata = {"Card": data.card}
+    postdata = {"card": data.card}
     headersList = {
  "Accept": "*/*",
  "Content-Type": "application/json" 
